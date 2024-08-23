@@ -13,10 +13,10 @@ export const createUser = async (user: CreateUserParams) => {
             undefined,
             user.name
         );
-        
+
         return parseStringify(newUser);
     } catch (error: any) {
-        console.log(error)
+        console.log(error);
         if (error && error?.code === 409) {
             const documents = await users.list([
                 Query.equal("email", [user.email]),
@@ -24,5 +24,15 @@ export const createUser = async (user: CreateUserParams) => {
 
             return documents?.users[0];
         }
+    }
+};
+
+export const getUser = async (userId: string) => {
+    try {
+        const user = await users.get(userId);
+
+        return parseStringify(user);
+    } catch (error) {
+        console.log(error);
     }
 };
