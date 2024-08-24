@@ -124,11 +124,13 @@ const RegisterForm = ({ user }: { user: User }) => {
                                             <RadioGroupItem
                                                 value={option}
                                                 id={option}
+                                            />
+                                            <Label
+                                                htmlFor={option}
+                                                className="cursor-pointer"
                                             >
-                                                <Label htmlFor={option} className="cursor-pointer">
-                                                    {option}
-                                                </Label>
-                                            </RadioGroupItem>
+                                                {option}
+                                            </Label>
                                         </div>
                                     ))}
                                 </RadioGroup>
