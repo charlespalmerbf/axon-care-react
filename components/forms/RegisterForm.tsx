@@ -14,9 +14,11 @@ import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup } from "@radix-ui/react-radio-group";
-import { GenderOptions } from "@/constants";
+import { Doctors, GenderOptions } from "@/constants";
 import { RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
+import { SelectItem } from "../ui/select";
+import Image from "next/image";
 
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
@@ -178,6 +180,29 @@ const RegisterForm = ({ user }: { user: User }) => {
                         <h2 className="sub-header">Medical Information</h2>
                     </div>
                 </section>
+
+                <CustomFormField
+                    fieldType={FormFieldType.SELECT}
+                    control={form.control}
+                    name="primaryPhysician"
+                    label="Primary Physician"
+                    placeholder="Select a physician"
+                >
+                    {Doctors.map((doctor) => (
+                        <SelectItem key={doctor.name} value={doctor.name}>
+                            <div className="flex cursor-pointer items-center gap-2">
+                                <Image
+                                    src={doctor.image}
+                                    height={32}
+                                    width={32}
+                                    alt={doctor.name}
+                                    className="rounded-full border border-dark-500"
+                                />
+                                <p>{doctor.name}</p>
+                            </div>
+                        </SelectItem>
+                    ))}
+                </CustomFormField>
 
                 <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
             </form>
