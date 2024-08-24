@@ -25,7 +25,6 @@ import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import FileUploader from "../FileUploader";
-import { register } from "module";
 
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
@@ -61,17 +60,37 @@ const RegisterForm = ({ user }: { user: User }) => {
         }
 
         try {
-            const patientData = {
-                ...values,
+            const patient = {
                 userId: user.$id,
+                name: values.name,
+                email: values.email,
+                phone: values.phone,
                 birthDate: new Date(values.birthDate),
-                IdentificationTypes: formData,
+                gender: values.gender,
+                address: values.address,
+                occupation: values.occupation,
+                emergencyContactName: values.emergencyContactName,
+                emergencyContactNumber: values.emergencyContactNumber,
+                primaryPhysician: values.primaryPhysician,
+                insuranceProvider: values.insuranceProvider,
+                insurancePolicyNumber: values.insurancePolicyNumber,
+                allergies: values.allergies,
+                currentMedication: values.currentMedication,
+                familyMedicalHistory: values.familyMedicalHistory,
+                pastMedicalHistory: values.pastMedicalHistory,
+                identificationType: values.identificationType,
+                identificationNumber: values.identificationNumber,
+                identificationDocument: values.identificationDocument
+                    ? formData
+                    : undefined,
+                privacyConsent: values.privacyConsent,
             };
 
-            // @ts-ignore
-            const patient = await registerPatient(patientData);
+            const newPatient = await registerPatient(patient);
 
-            if (patient) router.push(`/patients/${user.$id}/new-appointment`);
+            if (newPatient) {
+                router.push(`/patients/${user.$id}/new-appointment`);
+            }
         } catch (error) {
             console.debug(error);
         }
