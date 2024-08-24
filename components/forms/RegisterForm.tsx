@@ -14,11 +14,12 @@ import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup } from "@radix-ui/react-radio-group";
-import { Doctors, GenderOptions } from "@/constants";
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
 import { RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
+import FileUploader from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
@@ -254,6 +255,48 @@ const RegisterForm = ({ user }: { user: User }) => {
                         placeholder="Appendectomy, Tonsillectomy, etc."
                     />
                 </div>
+
+                <section className="space-y-6">
+                    <div className="mb-9 space-y-1">
+                        <h2 className="sub-header">
+                            Identification and Verification
+                        </h2>
+                    </div>
+                </section>
+
+                <CustomFormField
+                    fieldType={FormFieldType.SELECT}
+                    control={form.control}
+                    name="identificationType"
+                    label="Identification type"
+                    placeholder="Select an identification type"
+                >
+                    {IdentificationTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                            {type}
+                        </SelectItem>
+                    ))}
+                </CustomFormField>
+
+                <CustomFormField
+                    fieldType={FormFieldType.INPUT}
+                    control={form.control}
+                    name="identificationNumber"
+                    label="Identification number"
+                    placeholder="123456789"
+                />
+
+                <CustomFormField
+                    fieldType={FormFieldType.SKELETON}
+                    control={form.control}
+                    name="identificationDocument"
+                    label="Scanned copy of identification document"
+                    renderSkeleton={(field) => (
+                        <FormControl>
+                            <FileUploader files={field.value} onChange={field.onChange} />
+                        </FormControl>
+                    )}
+                />
 
                 <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
             </form>
