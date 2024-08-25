@@ -10,7 +10,7 @@ import {
     DATABASE_ID,
     databases,
 } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { formatDateTime, parseStringify } from "../utils";
 
 //  CREATE APPOINTMENT
 export const createAppointment = async (
@@ -95,6 +95,30 @@ export const getRecentAppointmentList = async () => {
     } catch (error) {
         console.error(
             "An error occurred while retrieving the recent appointments:",
+            error
+        );
+    }
+};
+
+export const updateAppointment = async ({
+    appointmentId,
+    appointment,
+}: UpdateAppointmentParams) => {
+    try {
+        // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
+        const updatedAppointment = await databases.updateDocument(
+            DATABASE_ID!,
+            APPOINTMENTS_COLLECTION_ID!,
+            appointmentId,
+            appointment
+        );
+        if (!updatedAppointment) throw Error;
+
+        revalidatePath("/admin");
+        return parseStringify(updatedAppointment);
+    } catch (error) {
+        console.error(
+            "An error occurred while scheduling an appointment:",
             error
         );
     }
