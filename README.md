@@ -3,17 +3,6 @@ Axon-Care
 
 Axon-Care is a modern healthcare management application that allows patients to easily register and request appointments, while giving administrators the ability to manage these appointments by scheduling or canceling them. The application is built with a focus on simplicity, efficiency, and scalability, using the latest technologies to ensure a seamless user experience.
 
-Table of Contents
------------------
-
--   [Features](#features)
--   [Technologies Used](#technologies-used)
--   [Getting Started](#getting-started)
--   [Installation](#installation)
--   [Environment Variables](#environment-variables)
--   [Usage](#usage)
--   [Contributing](#contributing)
-
 Features
 --------
 
@@ -119,8 +108,48 @@ Or with yarn:
 
 This will create an optimized production build in the `.next` directory.
 
-Usage
------
+### Code Quality and Linting
+
+Ensure code quality by running the following commands before committing:
+
+Either `npm run lint` or `yarn lint`
+
+### Conventional Commits
+
+This project uses a specification called **Conventional Commits**, please **ensure** this specification is followed when commiting code to this project.
+
+Guide: https://www.conventionalcommits.org/en/v1.0.0/
+
+### Pull Requests, Approvals & Releases
+
+###### Creating the develop release pull request
+
+Pull Requests made to this project are required in order to merge to **develop** or **main** 
+
+When submitting a Pull Request, at least one approval is required before merging. 
+
+When constructing a release, ensure that a release branch is created based off of the contents of develop, the only changes contained within this branch should be the version numbers in **package.json**.
+
+The Pull Request should be named as **[develop] release vX.Y.Z**
+
+###### Creating the main release pull request
+
+Once this Pull Request has been created, you will need to generate a new Pull Request based off **main** comparing the **develop** release branch you have just created, this should ensure that all changes that have been made to **develop** since the last release are contained within this update. 
+
+The Pull Request should be named as **[main] release vX.Y.Z**
+
+###### Creating the release tag
+
+Once this has been done and both Pull Requests have been merged, a release tag should be generated, named as **vX.Y.Z**
+
+### Contribution Guidelines
+
+-   **Branching strategy**: Use feature branches for new features, hotfix branches for urgent fixes.
+-   **Commit message format**: Follow the Conventional Commits specification.
+-   **Code review process**: Ensure code is reviewed and approved by at least one other developer.
+-   **Issue tracking and labeling**: Use labels to categorize and prioritize issues.
+
+### Usage
 
 -   **Patients** can sign up and log in to request new appointments.
 -   **Admins** can access the admin dashboard to view, schedule, or cancel appointments.
