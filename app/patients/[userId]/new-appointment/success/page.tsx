@@ -21,13 +21,16 @@ const Success = async ({
     <div className="flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
         <Link href="/">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="logo"
-            className="h-10 w-fit"
-          />
+          <div className="flex items-center mb-10">
+            <Image
+              src="/assets/icons/logo-icon.svg"
+              height={1000}
+              width={1000}
+              alt="patient"
+              className="h-10 w-auto"
+            />
+            <h1 className="text-xl font-bold ml-2">Axon Care</h1>
+          </div>
         </Link>
 
         <section className="flex flex-col items-center">

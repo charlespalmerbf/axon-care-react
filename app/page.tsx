@@ -15,13 +15,16 @@ export default function Home() {
       {isAdmin && <PasskeyModal isOpen={isAdmin} setIsOpen={setIsAdmin} />}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="patient"
-            className="mb-12 h-10 w-fit"
-          />
+          <div className="flex items-center mb-10">
+            <Image
+              src="/assets/icons/logo-icon.svg"
+              height={1000}
+              width={1000}
+              alt="patient"
+              className="h-10 w-auto"
+            />
+            <h1 className="text-xl font-bold ml-2">Axon Care</h1>
+          </div>
 
           <PatientForm />
 

@@ -53,13 +53,16 @@ const AdminPage = () => {
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
         <Link href="/" className="cursor-pointer">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={32}
-            width={162}
-            alt="logo"
-            className="h-8 w-fit"
-          />
+          <div className="flex items-center">
+            <Image
+              src="/assets/icons/logo-icon.svg"
+              height={32}
+              width={162}
+              alt="logo"
+              className="h-8 w-fit"
+            />
+            <h1 className="text-xl font-bold ml-2">Axon Care</h1>
+          </div>
         </Link>
 
         <p className="text-16-semibold">Admin Dashboard</p>
