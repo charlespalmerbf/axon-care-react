@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -5,9 +10,44 @@ import StatCard from "@/components/StatCard";
 import { columns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
+import LoadingScreen from "@/components/LoadingScreen";
+import { decryptKey } from "@/lib/utils";
 
-const AdminPage = async () => {
-  const appointments = await getRecentAppointmentList();
+interface Appointment {
+  scheduledCount: number;
+  pendingCount: number;
+  cancelledCount: number;
+  documents: any[];
+}
+
+const AdminPage = () => {
+  const encryptedKey =
+    typeof window !== "undefined"
+      ? window.sessionStorage.getItem("accessKey")
+      : null;
+
+  const [loading, setLoading] = useState(true);
+  const [appointments, setAppointments] = useState<Appointment | null>(null);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const appointmentsData = await getRecentAppointmentList();
+      setAppointments(appointmentsData);
+      setLoading(false);
+    };
+
+    const accessKey = encryptedKey && decryptKey(encryptedKey);
+
+    if (accessKey !== process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
+      redirect("/");
+    } else {
+      fetchAppointments();
+    }
+  }, [encryptedKey]);
+
+  if (loading || !appointments) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
