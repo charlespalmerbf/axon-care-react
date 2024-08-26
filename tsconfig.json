@@ -13,7 +13,8 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["/components/*"] // Explicitly map components directory
+      "@/*": ["components/*"], // Correct mapping for components
+      "@/constants/*": ["constants/*"] // Correct mapping for constants
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
