@@ -1,15 +1,18 @@
+"use client";
+
+import { useState } from "react";
+
+import Image from "next/image";
+
 import PatientForm from "@/components/forms/PatientForm";
 import PasskeyModal from "@/components/PasskeyModal";
 
-import Image from "next/image";
-import Link from "next/link";
-
-export default function Home({ searchParams }: SearchParamProps) {
-  const isAdmin = searchParams?.admin === "true";
+export default function Home() {
+  const [isAdmin, setIsAdmin] = useState(false);
 
   return (
     <div className="flex h-screen max-h-screen">
-      {isAdmin && <PasskeyModal />}
+      {isAdmin && <PasskeyModal isOpen={isAdmin} setIsOpen={setIsAdmin} />}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image
@@ -26,9 +29,12 @@ export default function Home({ searchParams }: SearchParamProps) {
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 Axon Care. All rights reserved.
             </p>
-            <Link href="/?admin=true" className="text-green-500">
+            <p
+              onClick={() => setIsAdmin(true)}
+              className="text-green-500 cursor-pointer"
+            >
               Admin
-            </Link>
+            </p>
           </div>
         </div>
       </section>

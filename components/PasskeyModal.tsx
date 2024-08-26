@@ -22,27 +22,32 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { decryptKey, encryptKey } from "@/lib/utils";
 
-const PasskeyModal = () => {
+const PasskeyModal = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+}) => {
   const router = useRouter();
   const path = usePathname();
 
-  const [open, setOpen] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
   const encryptedKey =
     typeof window !== "undefined"
-      ? window.localStorage.getItem("accessKey")
+      ? window.sessionStorage.getItem("accessKey")
       : null;
 
   useEffect(() => {
     const accessKey = encryptedKey && decryptKey(encryptedKey);
     if (path) {
       if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-        setOpen(false);
+        setIsOpen(false);
         router.push("/admin");
       } else {
-        setOpen(true);
+        setIsOpen(true);
       }
     }
   }, [encryptedKey]);
@@ -54,20 +59,20 @@ const PasskeyModal = () => {
 
     if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
       const encryptedKey = encryptKey(passkey);
-      localStorage.setItem("accessKey", encryptedKey);
-      setOpen(false);
+      sessionStorage.setItem("accessKey", encryptedKey);
+      router.push("/admin");
+      setIsOpen(false);
     } else {
       setError("Invalid passkey. Please try again.");
     }
   };
 
   const closeModal = () => {
-    setOpen(false);
-    router.push("/");
+    setIsOpen(false);
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="shad-alert-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-start justify-between">
