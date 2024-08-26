@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -36,12 +36,16 @@ export function DataTable<TData, TValue>({
       ? window.sessionStorage.getItem("accessKey")
       : null;
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const accessKey = encryptedKey && decryptKey(encryptedKey);
 
     if (accessKey !== process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
       redirect("/");
     }
+
+    setLoading(false);
   }, [encryptedKey]);
 
   const table = useReactTable({
@@ -50,6 +54,10 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="data-table">
