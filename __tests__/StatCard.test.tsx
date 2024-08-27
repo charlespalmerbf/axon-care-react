@@ -13,6 +13,11 @@ describe("StatCard", () => {
     type: "appointments" as const,
   };
 
+  it("matches snapshot", () => {
+    const screen = render(<StatCard {...defaultProps} />);
+    expect(screen).toMatchSnapshot();
+  });
+
   it("renders with correct count and label", () => {
     render(<StatCard {...defaultProps} />);
     expect(screen.getByText("10")).toBeInTheDocument();

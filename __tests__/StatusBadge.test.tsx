@@ -4,6 +4,11 @@ import "@testing-library/jest-dom";
 import { StatusBadge } from "@/components/StatusBadge";
 
 describe("StatusBadge Component", () => {
+  it("matches snapshot", () => {
+    const screen = render(<StatusBadge status="scheduled" />);
+    expect(screen).toMatchSnapshot();
+  });
+
   it("renders with 'scheduled' status", () => {
     render(<StatusBadge status="scheduled" />);
     
