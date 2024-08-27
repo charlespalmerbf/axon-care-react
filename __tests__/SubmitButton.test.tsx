@@ -1,6 +1,8 @@
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom"; 
+import "@testing-library/jest-dom";
+
 import SubmitButton from "@/components/SubmitButton";
 
 jest.mock("next/image", () => ({
@@ -13,12 +15,12 @@ describe("SubmitButton", () => {
     render(
       <SubmitButton isLoading={true}>
         <span>Submit</span>
-      </SubmitButton>
+      </SubmitButton>,
     );
 
     expect(screen.getByAltText("loader")).toBeInTheDocument();
     expect(screen.getByText("Loading ...")).toBeInTheDocument();
-    
+
     expect(screen.queryByText("Submit")).not.toBeInTheDocument();
   });
 
@@ -26,11 +28,11 @@ describe("SubmitButton", () => {
     render(
       <SubmitButton isLoading={false}>
         <span>Submit</span>
-      </SubmitButton>
+      </SubmitButton>,
     );
 
     expect(screen.getByText("Submit")).toBeInTheDocument();
-    
+
     expect(screen.queryByAltText("loader")).not.toBeInTheDocument();
     expect(screen.queryByText("Loading ...")).not.toBeInTheDocument();
   });
@@ -39,7 +41,7 @@ describe("SubmitButton", () => {
     render(
       <SubmitButton isLoading={false} className="custom-class">
         <span>Submit</span>
-      </SubmitButton>
+      </SubmitButton>,
     );
 
     expect(screen.getByRole("button")).toHaveClass("custom-class");
